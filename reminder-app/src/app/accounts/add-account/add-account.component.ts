@@ -1,17 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AccountsService } from '../accounts.service';
+import { Router } from '../../../../node_modules/@angular/router';
 
 @Component({
   selector: 'app-add-account',
   templateUrl: './add-account.component.html',
-  styleUrls: ['./add-account.component.scss']
+  styleUrls: ['./add-account.component.scss'],
+  providers: []
 })
-export class AddAccountComponent implements OnInit {
+export class AddAccountComponent implements OnInit, OnDestroy {
   accountForm: FormGroup;
   emails: Array<string>;
   phones: Array<string>;
-  constructor(private fb: FormBuilder, private as: AccountsService) { }
+  accountsService: AccountsService
+  constructor(private fb: FormBuilder, private as: AccountsService, private router: Router) {
+    this.accountsService = as;
+  }
 
   ngOnInit() {
     let emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -26,6 +31,42 @@ export class AddAccountComponent implements OnInit {
     });
     this.emails = [];
     this.phones = [];
+    if (this.accountsService.currentIndex > -1) {
+      this.editModeInitialization();
+    }
+  }
+
+  editModeInitialization() {
+    this.accountForm.controls['accountId'].setValue(this.accountsService.accountList[this.accountsService.currentIndex].accountId);
+    this.accountForm.controls['name'].setValue(this.accountsService.accountList[this.accountsService.currentIndex].name);
+    this.accountForm.controls['creditPeriod'].setValue(this.accountsService.accountList[this.accountsService.currentIndex].creditPeriod);
+    this.accountForm.controls['emailFlag'].setValue(this.accountsService.accountList[this.accountsService.currentIndex].emailFlag == 0 ? false : true);
+    this.accountForm.controls['smsFlag'].setValue(this.accountsService.accountList[this.accountsService.currentIndex].smsFlag == 0 ? false : true);
+    this.emails = [];
+    this.phones = [];
+    this.accountsService.accountList[this.accountsService.currentIndex].email.forEach(element => {
+      this.emails.push(element);
+    });
+    this.accountsService.accountList[this.accountsService.currentIndex].phone.forEach(element => {
+      this.phones.push(element);
+    });
+  }
+
+  back() {
+    this.router.navigateByUrl('/landing/accounts');
+  }
+  next() {
+    this.accountsService.currentIndex++;
+    this.editModeInitialization();
+  }
+  previous() {
+    this.accountsService.currentIndex--;
+    this.editModeInitialization();
+  }
+
+  ngOnDestroy() {
+    this.accountsService.currentIndex = -1;
+    this.accountsService.accountList = [];
   }
   get accountId() {
     return this.accountForm.get('accountId');
@@ -87,9 +128,17 @@ export class AddAccountComponent implements OnInit {
         phone: this.phones
       };
       console.log(accountData);
-      this.as.addAccount(accountData).subscribe(res => {
-        console.log(res);
-      });
+      if (this.accountsService.currentIndex == -1) {
+        this.accountsService.addAccount(accountData).subscribe(res => {
+          console.log(res);
+        });
+      }
+      else {
+        this.accountsService.modifyAccount(accountData).subscribe(res => {
+          console.log(res);
+        });
+      }
+
     }
   }
 

@@ -7,6 +7,7 @@ import { AuthGuardService } from './auth-guard.service';
 import { LandingComponent } from './landing/landing.component';
 import { AddAccountComponent } from './accounts/add-account/add-account.component';
 import { AccountsComponent } from './accounts/accounts.component';
+import { UploadAccountsComponent } from './accounts/upload-accounts/upload-accounts.component';
 // import { ClientsComponent } from './clients/clients.component';
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'accounts', component: AccountsComponent },
-      { path: 'accounts/add', component: AddAccountComponent }
+      { path: 'accounts/add', component: AddAccountComponent },
+      { path: 'accounts/upload', component: UploadAccountsComponent }
     ]
   }
 ];

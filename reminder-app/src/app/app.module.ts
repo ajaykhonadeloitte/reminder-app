@@ -29,6 +29,7 @@ import { AddAccountComponent } from './accounts/add-account/add-account.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { AccountsService } from './accounts/accounts.service';
 import { DisplayaccountsComponent } from './accounts/displayaccounts/displayaccounts.component';
+import { UploadAccountsComponent } from './accounts/upload-accounts/upload-accounts.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DisplayaccountsComponent } from './accounts/displayaccounts/displayacco
     LandingComponent,
     AccountsComponent,
     AddAccountComponent,
-    DisplayaccountsComponent
+    DisplayaccountsComponent,
+    UploadAccountsComponent
   ],
   imports: [
     BrowserModule,

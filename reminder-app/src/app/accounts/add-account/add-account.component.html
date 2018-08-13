@@ -4,7 +4,7 @@
       <h5 class="card-title">Add Account</h5>
       <form [formGroup]="accountForm">
         <div class="form-group">
-          <label for="accountId">Account ID*</label>
+          <label class=".col-form-label-sm" for="accountId">Account ID*</label>
           <input type="text" formControlName="accountId" class="form-control form-control-sm" id="accountId" name="accountId" placeholder="">
           <div class="" *ngIf="accountId.invalid && accountId.touched && accountId.dirty">
             <p class="text-danger" *ngIf="accountId.errors?.required">Account Id is required.</p>
@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="name">Account Name*</label>
+          <label class=".col-form-label-sm" for="name">Account Name*</label>
           <input type="text" formControlName="name" class="form-control form-control-sm" id="name" name="name" placeholder="">
           <div class="" *ngIf="name.invalid && name.touched && name.dirty">
             <p class="text-danger" *ngIf="name.errors?.required">Account Name is required.</p>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="form-group">
-          <label for="email">Email</label>
+          <label class=".col-form-label-sm" for="email">Email</label>
           <div class="row">
             <div class="col-9">
               <input type="email" class="form-control form-control-sm" name="email" placeholder="example@domain.com" formControlName="email">
@@ -40,11 +40,11 @@
         </div>
 
         <div class="form-group">
-          <label for="phone">Phone</label>
+          <label class=".col-form-label-sm" for="phone">Phone</label>
           <div class="row">
             <div class="col-9">
-              <input type="text" class="form-control form-control-sm" formControlName="phone" name="phone" placeholder="10 digit mobile number" maxlength="10"
-                minlength="10">
+              <input type="text" class="form-control form-control-sm" formControlName="phone" name="phone" placeholder="10 digit mobile number"
+                maxlength="10" minlength="10">
               <div class="" *ngIf="phone.invalid && phone.touched && phone.dirty">
                 <p class="text-danger" *ngIf="phone.errors?.minlength">Contact Number should be exactly 10-digit number.</p>
                 <p class="text-danger" *ngIf="phone.errors?.pattern">Contact should contain only numeric characters.</p>
@@ -61,7 +61,7 @@
         </div>
 
         <div class="form-group">
-          <label for="creditPeriod">Credit Period</label>
+          <label class=".col-form-label-sm" for="creditPeriod">Credit Period</label>
           <input type="number" class="form-control form-control-sm" maxlength="3" formControlName="creditPeriod" id="creditPeriod">
           <div class="" *ngIf="creditPeriod.invalid && creditPeriod.touched && creditPeriod.dirty">
             <p class="text-danger" *ngIf="creditPeriod.errors?.pattern">Credit Period should contain only numeric characters.</p>
@@ -71,15 +71,22 @@
         <div class="form-group form-check row">
           <div class="col-6">
             <input type="checkbox" class="form-check-input" id="emailFlag" name="emailFlag" formControlName="emailFlag">
-            <label class="form-check-label" for="emailFlag">Send Email Reminder</label>
+            <label class=".col-form-label-sm" class="form-check-label" for="emailFlag">Send Email Reminder</label>
           </div>
           <div class="col-6">
             <input type="checkbox" class="form-check-input" id="smsFlag" name="smsFlag" formControlName="smsFlag">
-            <label class="form-check-label" for="smsFlag">Send SMS Reminder</label>
+            <label class=".col-form-label-sm" class="form-check-label" for="smsFlag">Send SMS Reminder</label>
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary" [disabled]="accountForm.invalid" (click)="submitForm()" (enter)="submitForm()">Create</button>
+
+        <button type="button" class="btn btn-primary" [disabled]="accountForm.invalid" (click)="submitForm()" (enter)="submitForm()">{{accountsService.currentIndex == -1 ? 'Create' : 'Update'}}</button>
+        <button type="button" class="btn btn-light" (click)="back()">Back</button>
+        <button class="btn btn-outline-secondary float-right mx-2" (click)="next()" [hidden]="accountsService.accountList.length < 2"
+          [disabled]="accountsService.currentIndex == accountsService.accountList.length - 1">Next In List</button>
+        <button class="btn btn-outline-secondary float-right mx-2" (click)="previous()" [hidden]="accountsService.accountList.length < 2"
+          [disabled]="accountsService.currentIndex == 0">Previous In List</button>
+
       </form>
     </div>
   </div>

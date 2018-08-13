@@ -208,10 +208,12 @@ async function getAccounts(accountId) {
                 returnData.email = [];
                 returnData.phone = [];
                 results[1].data.forEach((email) => {
-                    returnData.email.push(email.email);
+                    if (email != null)
+                        returnData.email.push(email.email);
                 });
                 results[2].data.forEach((phone) => {
-                    returnData.phone.push(phone.phone);
+                    if (phone != null)
+                        returnData.phone.push(phone.phone);
                 });
                 // returnData.email = results[1].data[0];
                 // returnData.phone = results[2].data[0];

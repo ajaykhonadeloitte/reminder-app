@@ -4,6 +4,9 @@ import { Hosting } from '../hosting';
 
 @Injectable()
 export class AccountsService {
+  // editMode: boolean = false;
+  currentIndex: number = -1;
+  accountList: Array<any> = [];
 
   constructor(private _http: HttpClient) { }
 
@@ -12,5 +15,8 @@ export class AccountsService {
   }
   getAccounts() {
     return this._http.get(Hosting.getUrl('/api/accounts'));
+  }
+  modifyAccount(account){
+    return this._http.put(Hosting.getUrl('/api/accounts'), account);
   }
 }
