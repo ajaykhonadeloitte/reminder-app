@@ -16,7 +16,13 @@ export class AccountsService {
   getAccounts() {
     return this._http.get(Hosting.getUrl('/api/accounts'));
   }
-  modifyAccount(account){
+  modifyAccount(account) {
     return this._http.put(Hosting.getUrl('/api/accounts'), account);
+  }
+
+  uploadFile(file: File) {
+    let formData = new FormData();
+    formData.append('accounts', file, file.name);
+    return this._http.post(Hosting.getUrl('/api/accounts/upload'), formData);
   }
 }

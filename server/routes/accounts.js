@@ -1,6 +1,9 @@
 const express = require('express');
 // const api = require('./api');
 const router = express.Router();
+const multer = require('multer');
+let upload = multer({ dest: 'uploads/' });
+
 const Joi = require('joi');
 const SCHEMA = {
     TABLE_NAME: { accounts: 'accounts_tbl', accountEmail: 'account_email_tbl', accountPhone: 'account_phone_tbl', accountsView: 'accounts_vw' },
@@ -40,6 +43,11 @@ const con = mysql.createConnection({
     database: 'unichwmn_paymentreminder'
 });
 
+router.post('/upload', upload.single('accounts'), (req, res, next) => {
+    console.log(req.file);
+    
+    res.send('File Uploaded successfully.');
+});
 //router.post('/add', api.verify, (req, res) => {
 router.post('/add', (req, res) => {
     account = req.body;
