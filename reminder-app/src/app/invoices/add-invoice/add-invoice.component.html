@@ -1,0 +1,68 @@
+<div class="container p-3">
+  <h4>Add Invoice {{clientId}}
+    <button class="btn btn-outline-secondary btn-sm float-right mx-2">
+      <span class="d-sm-none d-none d-md-inline">Next In List</span><i class="fas fa-arrow-right"></i></button>
+    <button class="btn btn-outline-secondary btn-sm float-right"><i class="fas fa-arrow-left"></i>
+      <span class="d-sm-none d-none d-md-inline">Previous
+        In List</span></button></h4>
+
+  <form class="container p-2" [formGroup]="invoiceForm">
+    <div class="form-row">
+      <div class="form-group col-md-5">
+        <label for="invoiceId" class="form-control-label">Invoice ID</label>
+        <input type="text" class="form-control form-control-sm" id="invoiceId" formControlName="invoiceId" [ngClass]="invoiceId.invalid && invoiceId.dirty ?'is-invalid':''" />
+        <div class="invalid-feedback" *ngIf="invoiceId.errors?.required">
+          Invoice Id is required.
+        </div>
+        <div class="invalid-feedback" *ngIf="false">
+          Invocie Id already exists. <a href="#">Click Here</a> to open & edit the existing.
+        </div>
+      </div>
+
+      <div class="form-group col-md-5">
+        <label for="invoiceDate" class="form-control-label">Invoice Date</label>
+        <input type="date" class="form-control form-control-sm" id="invoiceDate" formControlName="invoiceDate"
+          [ngClass]="invoiceDate.invalid ?'is-invalid':''" />
+        <div class="invalid-feedback">
+          Date is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row " (focusout)="clearSuggestions()">
+      <div class="form-group col-sm-10">
+        <label for="client">Client</label>
+        <input type="text" class="form-control form-control-sm" (keydown)="clientSearch()" (keydown.enter)="selectSuggestion()"
+          formControlName="client" />
+        <div class="autoSuggest" *ngIf="suggestions.length > 0">
+          <ul class=" card bg-light">
+            <li *ngFor="let suggestion of suggestions" class="lead" (click)="selectSuggestion(suggestion)">{{suggestion.client}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-sm-5">
+        <label for="amount">Invoice Amount</label>
+        <input type="number" formControlName="amount" class="form-control form-control-sm" id="amount" [ngClass]="amount.invalid && amount.dirty ?'is-invalid':''">
+        <div class="invalid-feedback" *ngIf="amount.errors?.required">
+          Please enter a valid Amount.
+        </div>
+      </div>
+      <div class="form-group col-sm-5">
+        <label for="creditPeriod">Credit Period (in Days)</label>
+        <input type="number" class="form-control form-control-sm w-100" id="creditPeriod" name="creditPeriod"
+          formControlName="creditPeriod" [ngClass]="creditPeriod.invalid && creditPeriod.dirty ?'is-invalid':''" max="999">
+        <div class="invalid-feedback">
+          Credit Period can be maximum 999 days.
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary">Create</button>
+    <button class="btn btn-light">Clear</button>
+
+
+  </form>
+
+</div>

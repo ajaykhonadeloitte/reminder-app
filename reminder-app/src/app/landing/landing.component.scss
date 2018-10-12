@@ -1,3 +1,28 @@
-router-outlet *{
-    font-size: 0.8rem;
+router-outlet * {
+  font-size: 0.8rem;
 }
+.main{
+  height: 89vh;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.hover-show {
+  display: none;
+}
+
+.menu:hover .hover-show {
+  display: inline;
+}
+.menu {
+  padding: 0.5em;
+}
+
+.menu-item {
+  padding: 1em 0.5em;
+}
+.menu-item:hover {
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+

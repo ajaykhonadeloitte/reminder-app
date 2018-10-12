@@ -30,6 +30,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AccountsService } from './accounts/accounts.service';
 import { DisplayaccountsComponent } from './accounts/displayaccounts/displayaccounts.component';
 import { UploadAccountsComponent } from './accounts/upload-accounts/upload-accounts.component';
+import { AddInvoiceComponent } from './invoices/add-invoice/add-invoice.component';
+import { InvoiceComponent } from './invoices/invoice/invoice.component';
+import { InvoicesComponent } from './invoices/invoices.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { UploadAccountsComponent } from './accounts/upload-accounts/upload-accou
     AccountsComponent,
     AddAccountComponent,
     DisplayaccountsComponent,
-    UploadAccountsComponent
+    UploadAccountsComponent,
+    AddInvoiceComponent,
+    InvoiceComponent,
+    InvoicesComponent
   ],
   imports: [
     BrowserModule,
